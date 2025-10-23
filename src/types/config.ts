@@ -5,6 +5,11 @@ export interface ReceiptrailConfig {
   accessToken: string;
 
   /**
+   * Application ID (client_id) from Logto
+   */
+  appId: string;
+
+  /**
    * Logto endpoint URL
    */
   logtoEndpoint?: string;
