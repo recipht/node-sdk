@@ -9,12 +9,12 @@ import {
 } from '../types/ingestor';
 
 export class IngestorClient extends BaseClient {
-  async ingestReceipt(request: IngestReceiptRequest, idempotencyKey?: string): Promise<IngestReceiptResponse> {
+  async ingestReceipt(request: IngestReceiptRequest, idempotencyKey: string): Promise<IngestReceiptResponse> {
     return this.request<IngestReceiptResponse>({
       method: 'POST',
       url: '/v1/ingestor/receipts/ingest',
       data: request,
-      headers: idempotencyKey ? { 'Idempotency-Key': idempotencyKey } : undefined,
+      headers: { 'Idempotency-Key': idempotencyKey },
     });
   }
 
