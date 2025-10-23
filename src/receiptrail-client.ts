@@ -15,7 +15,6 @@ export class ReceiptrailClient {
   constructor(config: ReceiptrailConfig) {
     this.config = {
       accessToken: config.accessToken,
-      appId: config.appId,
       logtoEndpoint: config.logtoEndpoint || 'https://dtoqr1.logto.app',
       baseUrl: config.baseUrl || 'https://api.receiptrail.ai',
       timeout: config.timeout || 30000,
@@ -23,7 +22,6 @@ export class ReceiptrailClient {
 
     this.authClient = new LogtoAuthClient(
       this.config.accessToken,
-      this.config.appId,
       this.config.logtoEndpoint
     );
 
