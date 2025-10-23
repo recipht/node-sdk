@@ -4,11 +4,13 @@ import { LogtoTokenResponse } from '../types/config';
 export class LogtoAuthClient {
   private logtoEndpoint: string;
   private personalAccessToken: string;
+  private appId: string;
   private cachedToken: string | null = null;
   private tokenExpiry: number = 0;
 
-  constructor(personalAccessToken: string, logtoEndpoint: string = 'https://dtoqr1.logto.app') {
+  constructor(personalAccessToken: string, appId: string, logtoEndpoint: string = 'https://dtoqr1.logto.app') {
     this.personalAccessToken = personalAccessToken;
+    this.appId = appId;
     this.logtoEndpoint = logtoEndpoint;
   }
 
@@ -19,14 +21,17 @@ export class LogtoAuthClient {
     }
 
     // Exchange personal access token for API access token
+    const params = new URLSearchParams({
+      grant_type: 'urn:ietf:params:oauth:grant-type:token-exchange',
+      subject_token: this.personalAccessToken,
+      subject_token_type: 'urn:logto:token-type:personal_access_token',
+      client_id: this.appId,
+      resource: 'https://api.receiptrail.ai',
+    });
+
     const response = await axios.post<LogtoTokenResponse>(
       `${this.logtoEndpoint}/oidc/token`,
-      {
-        grant_type: 'urn:ietf:params:oauth:grant-type:token-exchange',
-        subject_token: this.personalAccessToken,
-        subject_token_type: 'urn:ietf:params:oauth:token-type:access_token',
-        resource: 'https://api.receiptrail.ai',
-      },
+      params.toString(),
       {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
