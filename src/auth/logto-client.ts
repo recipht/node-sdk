@@ -2,8 +2,7 @@ import axios from 'axios';
 import { LogtoTokenResponse } from '../types/config';
 
 export class LogtoAuthClient {
-  private static readonly APP_ID = 'REDACTED_APP_ID';
-  private static readonly APP_SECRET = 'REDACTED_SECRET';
+  private static readonly APP_ID = '9cj6p1ckpbunagyu1b4f4';
 
   private logtoEndpoint: string;
   private personalAccessToken: string;
@@ -26,11 +25,9 @@ export class LogtoAuthClient {
       grant_type: 'urn:ietf:params:oauth:grant-type:token-exchange',
       subject_token: this.personalAccessToken,
       subject_token_type: 'urn:logto:token-type:personal_access_token',
+      client_id: LogtoAuthClient.APP_ID,
       resource: 'https://api.receiptrail.ai',
     });
-
-    // Create Basic Auth header for client authentication
-    const credentials = Buffer.from(`${LogtoAuthClient.APP_ID}:${LogtoAuthClient.APP_SECRET}`).toString('base64');
 
     const response = await axios.post<LogtoTokenResponse>(
       `${this.logtoEndpoint}/oidc/token`,
@@ -38,7 +35,6 @@ export class LogtoAuthClient {
       {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
-          'Authorization': `Basic ${credentials}`,
         },
       }
     );
