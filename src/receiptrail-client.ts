@@ -2,12 +2,10 @@ import { ReceiptrailConfig } from './types/config';
 import { LogtoAuthClient } from './auth/logto-client';
 import { IngestorClient } from './clients/ingestor-client';
 import { NormalizerClient } from './clients/normalizer-client';
-import { DeliveryClient } from './clients/delivery-client';
 
 export class ReceiptrailClient {
   public readonly ingestor: IngestorClient;
   public readonly normalizer: NormalizerClient;
-  public readonly delivery: DeliveryClient;
 
   private authClient: LogtoAuthClient;
   private config: Required<ReceiptrailConfig>;
@@ -32,12 +30,6 @@ export class ReceiptrailClient {
     );
 
     this.normalizer = new NormalizerClient(
-      this.authClient,
-      this.config.baseUrl,
-      this.config.timeout
-    );
-
-    this.delivery = new DeliveryClient(
       this.authClient,
       this.config.baseUrl,
       this.config.timeout
