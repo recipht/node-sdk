@@ -7,7 +7,6 @@ Official Node.js SDK for the Receiptrail API - a digital receipt aggregation, no
 - 🔐 **Authentication** - Secure authentication using Logto Personal Access Tokens (PAT)
 - 📥 **Receipt Ingestion** - Ingest receipts from various sources with idempotency support
 - 🔄 **Receipt Normalization** - Process and normalize receipt data from images or JSON
-- 📊 **Analytics** - Access receipt and delivery analytics
 - 📦 **Type-Safe** - Full TypeScript support with detailed type definitions
 - ⚡ **Token Caching** - Automatic access token caching and refresh
 
@@ -66,45 +65,41 @@ const response = await client.ingestor.ingestReceipt(
 );
 ```
 
-### 4. Get Analytics
+### 4. Normalize Receipts
 
 ```typescript
-// Get receipt value analytics
-const receiptValue = await client.ingestor.getReceiptValue(
-  '2025-01-01',
-  '2025-01-31'
-);
+// Process receipt from image
+const normalized = await client.normalizer.processImage({
+  image_url: 'https://example.com/receipt.jpg',
+  merchant_code: 'MERCHANT_123',
+});
 
-// Get delivery summary
-const deliverySummary = await client.delivery.getDeliveriesSummary(
-  '2025-01-01',
-  '2025-01-31'
-);
+// Process receipt from JSON
+const jsonNormalized = await client.normalizer.processJson({
+  merchant_code: 'MERCHANT_123',
+  receipt_data: {
+    total_amount: 15.99,
+    currency: 'USD',
+    // ... other receipt data
+  },
+});
 ```
 
 ## API Reference
 
 ### Ingestor Client (`client.ingestor`)
 
-Manage receipt ingestion and analytics.
+Ingest receipts from various sources.
 
 #### Methods
 
 - **`ingestReceipt(request, idempotencyKey)`** - Ingest receipts with duplicate prevention
-  - `request`: Receipt data including merchant_code, location_id, and receipts array
+  - `request`: Receipt data including merchant_code, location_id, source_type, format_type, and receipts array
   - `idempotencyKey` (required): Unique key to prevent duplicate ingestion
-
-- **`getReceiptValue(startDate?, endDate?)`** - Get total receipt value for date range
-
-- **`getReceiptCount(startDate?, endDate?)`** - Get receipt count for date range
-
-- **`getReceiptChart(startDate?, endDate?)`** - Get receipt chart data for visualization
-
-- **`getIngestionSuccessRate(startDate?, endDate?)`** - Get ingestion success rate metrics
 
 ### Normalizer Client (`client.normalizer`)
 
-Process and normalize receipt data from various formats.
+Process and normalize receipt data from images or JSON.
 
 #### Methods
 
@@ -112,24 +107,7 @@ Process and normalize receipt data from various formats.
   - `request`: { image_url, merchant_code }
 
 - **`processJson(request)`** - Normalize structured JSON receipt data
-
-- **`processBulkJson(request)`** - Process multiple JSON receipts in bulk
-
-- **`listReceipts(skip?, limit?)`** - List normalized receipts with pagination
-
-- **`getReceipt(receiptId)`** - Get specific receipt by ID
-
-### Delivery Client (`client.delivery`)
-
-Track and analyze receipt delivery status.
-
-#### Methods
-
-- **`getDeliveriesSummary(startDate?, endDate?)`** - Get delivery summary statistics
-
-- **`getDeliverySuccessRate(startDate?, endDate?)`** - Get delivery success rate
-
-- **`getDeliveriesChart(startDate?, endDate?)`** - Get delivery data for charts
+  - `request`: { merchant_code, receipt_data }
 
 ## Configuration Options
 
