@@ -11,7 +11,7 @@ export class NormalizerClient extends BaseClient {
   async processImage(request: ProcessImageRequest): Promise<ProcessImageResponse> {
     return this.request<ProcessImageResponse>({
       method: 'POST',
-      url: '/normalizer/process/image',
+      url: '/v1/normalizer/process/image',
       data: request,
     });
   }
@@ -19,7 +19,7 @@ export class NormalizerClient extends BaseClient {
   async processJson(request: ProcessJsonRequest): Promise<NormalizedReceipt> {
     return this.request<NormalizedReceipt>({
       method: 'POST',
-      url: '/normalizer/process/json',
+      url: '/v1/normalizer/process/json',
       data: request,
     });
   }
@@ -27,7 +27,7 @@ export class NormalizerClient extends BaseClient {
   async processBulkJson(request: ProcessBulkJsonRequest): Promise<NormalizedReceipt[]> {
     return this.request<NormalizedReceipt[]>({
       method: 'POST',
-      url: '/normalizer/process/bulk-json',
+      url: '/v1/normalizer/process/bulk-json',
       data: request,
     });
   }
@@ -35,7 +35,7 @@ export class NormalizerClient extends BaseClient {
   async listReceipts(skip?: number, limit?: number): Promise<NormalizedReceipt[]> {
     return this.request<NormalizedReceipt[]>({
       method: 'GET',
-      url: '/normalizer/receipts',
+      url: '/v1/normalizer/receipts',
       params: { skip, limit },
     });
   }
@@ -43,7 +43,7 @@ export class NormalizerClient extends BaseClient {
   async getReceipt(receiptId: string): Promise<NormalizedReceipt> {
     return this.request<NormalizedReceipt>({
       method: 'GET',
-      url: `/normalizer/receipts/${receiptId}`,
+      url: `/v1/normalizer/receipts/${receiptId}`,
     });
   }
 }

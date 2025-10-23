@@ -9,7 +9,7 @@ export class DeliveryClient extends BaseClient {
   async getDeliveriesSummary(startDate?: string, endDate?: string): Promise<DeliveriesSummaryResponse> {
     return this.request<DeliveriesSummaryResponse>({
       method: 'GET',
-      url: '/delivery/analytics/deliveries/summary',
+      url: '/v1/delivery/analytics/deliveries/summary',
       params: { start_date: startDate, end_date: endDate },
     });
   }
@@ -17,7 +17,7 @@ export class DeliveryClient extends BaseClient {
   async getDeliverySuccessRate(startDate?: string, endDate?: string): Promise<DeliverySuccessRateResponse> {
     return this.request<DeliverySuccessRateResponse>({
       method: 'GET',
-      url: '/delivery/analytics/deliveries/success-rate',
+      url: '/v1/delivery/analytics/deliveries/success-rate',
       params: { start_date: startDate, end_date: endDate },
     });
   }
@@ -25,7 +25,7 @@ export class DeliveryClient extends BaseClient {
   async getDeliveriesChart(startDate?: string, endDate?: string): Promise<DeliveryChartResponse> {
     return this.request<DeliveryChartResponse>({
       method: 'GET',
-      url: '/delivery/analytics/deliveries/chart',
+      url: '/v1/delivery/analytics/deliveries/chart',
       params: { start_date: startDate, end_date: endDate },
     });
   }

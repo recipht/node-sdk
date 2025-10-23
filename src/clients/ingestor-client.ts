@@ -12,7 +12,7 @@ export class IngestorClient extends BaseClient {
   async ingestReceipt(request: IngestReceiptRequest, idempotencyKey?: string): Promise<IngestReceiptResponse> {
     return this.request<IngestReceiptResponse>({
       method: 'POST',
-      url: '/ingestor/receipts/ingest',
+      url: '/v1/ingestor/receipts/ingest',
       data: request,
       headers: idempotencyKey ? { 'Idempotency-Key': idempotencyKey } : undefined,
     });
@@ -21,7 +21,7 @@ export class IngestorClient extends BaseClient {
   async getReceiptValue(startDate?: string, endDate?: string): Promise<ReceiptValueResponse> {
     return this.request<ReceiptValueResponse>({
       method: 'GET',
-      url: '/ingestor/analytics/receipts/value',
+      url: '/v1/ingestor/analytics/receipts/value',
       params: { start_date: startDate, end_date: endDate },
     });
   }
@@ -29,7 +29,7 @@ export class IngestorClient extends BaseClient {
   async getReceiptCount(startDate?: string, endDate?: string): Promise<ReceiptCountResponse> {
     return this.request<ReceiptCountResponse>({
       method: 'GET',
-      url: '/ingestor/analytics/receipts/count',
+      url: '/v1/ingestor/analytics/receipts/count',
       params: { start_date: startDate, end_date: endDate },
     });
   }
