@@ -3,7 +3,6 @@ import {
   ProcessImageRequest,
   ProcessImageResponse,
   ProcessJsonRequest,
-  ProcessBulkJsonRequest,
   NormalizedReceipt,
 } from '../types/normalizer';
 
@@ -21,29 +20,6 @@ export class NormalizerClient extends BaseClient {
       method: 'POST',
       url: '/v1/normalizer/process/json',
       data: request,
-    });
-  }
-
-  async processBulkJson(request: ProcessBulkJsonRequest): Promise<NormalizedReceipt[]> {
-    return this.request<NormalizedReceipt[]>({
-      method: 'POST',
-      url: '/v1/normalizer/process/bulk-json',
-      data: request,
-    });
-  }
-
-  async listReceipts(skip?: number, limit?: number): Promise<NormalizedReceipt[]> {
-    return this.request<NormalizedReceipt[]>({
-      method: 'GET',
-      url: '/v1/normalizer/receipts',
-      params: { skip, limit },
-    });
-  }
-
-  async getReceipt(receiptId: string): Promise<NormalizedReceipt> {
-    return this.request<NormalizedReceipt>({
-      method: 'GET',
-      url: `/v1/normalizer/receipts/${receiptId}`,
     });
   }
 }
