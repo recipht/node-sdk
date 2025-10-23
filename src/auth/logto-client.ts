@@ -2,15 +2,15 @@ import axios from 'axios';
 import { LogtoTokenResponse } from '../types/config';
 
 export class LogtoAuthClient {
+  private static readonly APP_ID = 'REDACTED_APP_ID';
+
   private logtoEndpoint: string;
   private personalAccessToken: string;
-  private appId: string;
   private cachedToken: string | null = null;
   private tokenExpiry: number = 0;
 
-  constructor(personalAccessToken: string, appId: string, logtoEndpoint: string = 'https://dtoqr1.logto.app') {
+  constructor(personalAccessToken: string, logtoEndpoint: string = 'https://dtoqr1.logto.app') {
     this.personalAccessToken = personalAccessToken;
-    this.appId = appId;
     this.logtoEndpoint = logtoEndpoint;
   }
 
@@ -25,7 +25,7 @@ export class LogtoAuthClient {
       grant_type: 'urn:ietf:params:oauth:grant-type:token-exchange',
       subject_token: this.personalAccessToken,
       subject_token_type: 'urn:logto:token-type:personal_access_token',
-      client_id: this.appId,
+      client_id: LogtoAuthClient.APP_ID,
       resource: 'https://api.receiptrail.ai',
     });
 
